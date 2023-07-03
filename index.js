@@ -47,6 +47,7 @@ function make_guess() {
 
         guess_count ++
         current_row = rows[guess_count]
+        current_guess = []
     }
 }
 
