@@ -4,9 +4,7 @@ let current_guess = []
 
 // Gather rows
 let rows = document.getElementsByClassName('row')
-
 let current_row = rows[guess_count]
-
 let word = get_word()
 
 window.addEventListener('keypress', (e) => {
@@ -31,19 +29,29 @@ function make_guess() {
     console.log(current_guess)
     console.log(word)
 
+    let available_letters = word.slice()
+
+    let correct_letters = 0
+
     if (current_guess.length == 5) {
         for (let i = 0; i < 5; i++) {
-            console.log(word.indexOf(current_guess[i]))
-            if (current_guess[i] == word[i]) {
+            if (current_guess[i] == available_letters[i]) {
                 console.log('green')
                 current_row.querySelectorAll('.cell')[i].style.backgroundColor = 'green'
-            } else if (word.indexOf(current_guess[i]) > -1) {
+                correct_letters ++
+                available_letters[i] = null // remove letter if correct
+            } else if (available_letters.indexOf(current_guess[i]) > -1) {
                 console.log('yellow')
                 current_row.querySelectorAll('.cell')[i].style.backgroundColor = 'yellow'
+
+                let index = available_letters.indexOf(current_guess[i])
+                available_letters[index] = null
             } else {
                 current_row.querySelectorAll('.cell')[i].style.backgroundColor = '#333'
             }
         }
+
+        if (correct_letters == 5) finish()
 
         guess_count ++
         current_row = rows[guess_count]
@@ -63,9 +71,7 @@ function add_letter(letter) {
     if (current_guess.length < 5){
         let len = current_guess.length
         current_guess.push(letter)
-        console.log(current_row.querySelector('.cell'))
         current_row.querySelectorAll('.cell')[len].textContent = letter
-        current_row.querySelectorAll('.cell')[len].style.backgroundColor = 'cyan'
     }
 }
 
@@ -75,4 +81,8 @@ function remove_letter() {
         current_guess.pop()
         current_row.querySelectorAll('.cell')[len-1].textContent = ''
     }
+}
+
+function finish() {
+
 }
