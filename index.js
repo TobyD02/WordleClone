@@ -1,3 +1,5 @@
+let playing = true
+
 let guesses = 6
 let guess_count = 0
 let current_guess = []
@@ -8,18 +10,21 @@ let current_row = rows[guess_count]
 let word = get_word()
 
 window.addEventListener('keypress', (e) => {
-    console.log(e.key)
-    switch (e.key) {
-        case 'Enter':
-            make_guess()
-            break;
-        case 'Backspace':
-            remove_letter()
-            break;
-        default:
-            add_letter(e.key)
-            break;
-        
+
+    if (playing) {
+        console.log(e.key)
+        switch (e.key) {
+            case 'Enter':
+                make_guess()
+                break;
+            case 'Backspace':
+                remove_letter()
+                break;
+            default:
+                add_letter(e.key)
+                break;
+            
+        }
     }
 })
 
@@ -32,31 +37,39 @@ function make_guess() {
     let available_letters = word.slice()
 
     let correct_letters = 0
+    let w = current_guess.join('')
 
-    if (current_guess.length == 5) {
-        for (let i = 0; i < 5; i++) {
-            if (current_guess[i] == available_letters[i]) {
-                console.log('green')
-                current_row.querySelectorAll('.cell')[i].style.backgroundColor = 'green'
-                correct_letters ++
-                available_letters[i] = null // remove letter if correct
-            } else if (available_letters.indexOf(current_guess[i]) > -1) {
-                console.log('yellow')
-                current_row.querySelectorAll('.cell')[i].style.backgroundColor = 'yellow'
-
-                let index = available_letters.indexOf(current_guess[i])
-                available_letters[index] = null
-            } else {
-                current_row.querySelectorAll('.cell')[i].style.backgroundColor = '#333'
+    if (valid_guesses.indexOf(w) > -1 || words.indexOf(w) > -1) {
+        if (current_guess.length == 5) {
+            for (let i = 0; i < 5; i++) {
+                if (current_guess[i] == available_letters[i]) {
+                    console.log('green')
+                    current_row.querySelectorAll('.cell')[i].style.backgroundColor = 'green'
+                    correct_letters ++
+                    available_letters[i] = null // remove letter if correct
+                } else if (available_letters.indexOf(current_guess[i]) > -1) {
+                    console.log('yellow')
+                    current_row.querySelectorAll('.cell')[i].style.backgroundColor = 'yellow'
+    
+                    let index = available_letters.indexOf(current_guess[i])
+                    available_letters[index] = null
+                } else {
+                    current_row.querySelectorAll('.cell')[i].style.backgroundColor = '#222'
+                }
             }
+    
+            if (correct_letters == 5) finish()
+    
+            guess_count ++
+            current_row = rows[guess_count]
+            current_guess = []
+
+            document.querySelector('h2').style.display = 'none'
         }
-
-        if (correct_letters == 5) finish()
-
-        guess_count ++
-        current_row = rows[guess_count]
-        current_guess = []
+    } else {
+        document.querySelector('h2').style.display = 'block'
     }
+
 }
 
 function get_word() {
@@ -84,5 +97,5 @@ function remove_letter() {
 }
 
 function finish() {
-
+    playing = false
 }

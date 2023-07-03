@@ -19,13 +19,21 @@
             background-color: #333;
         }
 
-        h1 {
-            color: white;
+        #headers {
             font-family: 'Roboto Mono', monospace;
             position: absolute;
             left: 50%;
             top: 12%;
             transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            color: white;
+        }
+
+        h2 {
+            display: none;
+            color: red;
         }
 
         .container {
@@ -50,17 +58,19 @@
             border-style: solid;
             width: 60px;
             height: 60px;
-            border-width: 2px;
             margin: 2px;
-            /* text-align: center; */
+            border-width: 2px;
             color: white;
             font-family: 'Roboto Mono', monospace;
-            font-size: 60px;
+            font-size: 50px;
         }
 
     </style>
 
-    <h1> <s>NOT</s> Wordle</h1>
+    <div id="headers"> 
+        <h1><s>NOT</s> Wordle</h1>
+        <h2>Invalid guess</h2>
+    </div>
 </head>
 <body>
     <div class="container">
