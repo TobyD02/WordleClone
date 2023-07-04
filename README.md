@@ -11,3 +11,4 @@ Each day a new word is selected. You have 6 guesses to try and figure out which 
 - Add functionality for stats to be recorded: 
     - If you have already played today then your progress should be remembered/tracked
     - Store a counter for how many correct guesses you have made in your lifetime, and keep track of how many guesses it has taken you.
+    - Show correct answer if it isn't guessed correctly.
